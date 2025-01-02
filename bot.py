@@ -1,19 +1,29 @@
+import os
+from dotenv import load_dotenv
 from pyrogram import Client
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Read credentials from environment variables
+api_id = int(os.getenv("API_ID"))
+api_hash = os.getenv("API_HASH")
+bot_token = os.getenv("BOT_TOKEN")
 
 class Bot(Client):
     def __init__(self):
-        # Initialize the bot with necessary parameters
+        # Initialize the Pyrogram Client with the credentials
         super().__init__(
             "FileBot",
-            api_id=int("13567777"),  # Replace with your actual API ID
-            api_hash="78df7d20e1a8d17329d38d3095af744f",  # Replace with your actual API hash
-            bot_token="7580468323:AAHq1ZRBwsA9yFDz6Xchmw5QXMXom0gDE54",  # Replace with your bot token
+            api_id=api_id,
+            api_hash=api_hash,
+            bot_token=bot_token,
         )
 
     async def start(self):
         await super().start()
         me = await self.get_me()
-        print(f"Bot started as {me.username}")
+        print(f"Bot started as @{me.username}")
 
     async def stop(self, *args):
         await super().stop()
